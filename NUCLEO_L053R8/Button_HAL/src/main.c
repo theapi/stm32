@@ -5,17 +5,14 @@
 #include "stm32l0xx.h"
 #include "stm32l0xx_nucleo.h"
 
-int
-main (void)
-{
+int main(void) {
 
-  HAL_Init();
-  BSP_LED_Init(LED2);
+	HAL_Init();
+	BSP_LED_Init(LED2);
 
-  while (1)
-    {
-      BSP_LED_Toggle(LED2);
-      HAL_Delay(500);
-    }
+	while (1) {
+		BSP_LED_Toggle(LED2);
+		HAL_Delay(500);
+	}
 
 }
