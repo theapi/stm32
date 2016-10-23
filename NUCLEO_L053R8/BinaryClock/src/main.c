@@ -31,11 +31,49 @@ void leds_init() {
 	GPIOB->BSRR = 0xFFF0;
 }
 
+/**
+ * Initialise the on board USER button: PORT C, PIN 13
+ */
+void button_init() {
+	// Enable GPIOC
+	RCC->IOPENR |= RCC_IOPENR_IOPCEN;
+	// Input mode: 00
+	GPIOC->MODER &= ~(GPIO_MODER_MODE13);
+	// Hard wired as a pull up.
+}
+
+char press_handled = 0;
+char count = 0;
+
 int main(void) {
 
 	leds_init();
+	button_init();
 
 	while (1) {
-
+		// Read the button.
+		if (GPIOC->IDR && GPIO_IDR_ID13_Msk) {
+			// Not pressed.
+			if (press_handled) {
+				press_handled = 0;
+			}
+		} else {
+			if (!press_handled) {
+				press_handled = 1;
+				// Pressed.
+				if (GPIOB->ODR == 0xFFF0) {
+					// Turn off all leds.
+					GPIOB->ODR = 0x0000;
+					count = 0;
+				} else {
+					count++;
+					// Pin 4 is the least significant bit of the clock.
+					// So shift the count over 4 places.
+					GPIOB->ODR = (count << 4) ;
+				}
+			}
+		}
 	}
+
 }
+
