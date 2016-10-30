@@ -42,8 +42,15 @@ void button_init() {
 	// Hard wired as a pull up.
 }
 
+void dumbDelay(int cycles) {
+	volatile int i, j;
+	for (i = 0; i < cycles; ++i) {
+		j++;
+	}
+}
+
 char press_handled = 0;
-char count = 0;
+int count = 0;
 
 int main(void) {
 
@@ -51,6 +58,21 @@ int main(void) {
 	button_init();
 
 	while (1) {
+
+		if (GPIOB->ODR == 0xFFF0) {
+			// Turn off all leds.
+			GPIOB->ODR = 0x0000;
+			count = 0;
+		} else {
+			count++;
+			// Pin 4 is the least significant bit of the clock.
+			// So shift the count over 4 places.
+			GPIOB->ODR = (count << 4);
+		}
+
+		dumbDelay(10000);
+
+		/*
 		// Read the button.
 		if (GPIOC->IDR && GPIO_IDR_ID13_Msk) {
 			// Not pressed.
@@ -73,6 +95,7 @@ int main(void) {
 				}
 			}
 		}
+		*/
 	}
 
 }
