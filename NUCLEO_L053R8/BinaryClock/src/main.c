@@ -50,7 +50,8 @@ void dumbDelay(int cycles) {
 }
 
 char press_handled = 0;
-int count = 0;
+char hours = 0;
+char minutes = 0;
 
 int main(void) {
 
@@ -59,43 +60,24 @@ int main(void) {
 
 	while (1) {
 
-		if (GPIOB->ODR == 0xFFF0) {
-			// Turn off all leds.
-			GPIOB->ODR = 0x0000;
-			count = 0;
-		} else {
-			count++;
-			// Pin 4 is the least significant bit of the clock.
-			// So shift the count over 4 places.
-			GPIOB->ODR = (count << 4);
-		}
-
 		dumbDelay(10000);
+		minutes++;
 
-		/*
-		// Read the button.
-		if (GPIOC->IDR && GPIO_IDR_ID13_Msk) {
-			// Not pressed.
-			if (press_handled) {
-				press_handled = 0;
-			}
-		} else {
-			if (!press_handled) {
-				press_handled = 1;
-				// Pressed.
-				if (GPIOB->ODR == 0xFFF0) {
-					// Turn off all leds.
-					GPIOB->ODR = 0x0000;
-					count = 0;
-				} else {
-					count++;
-					// Pin 4 is the least significant bit of the clock.
-					// So shift the count over 4 places.
-					GPIOB->ODR = (count << 4) ;
-				}
-			}
+		if (minutes == 60) {
+			hours++;
+			minutes = 0;
 		}
-		*/
+		if (hours == 24) {
+			hours = 0;
+
+		}
+
+		// hours = pins 8, 7, 6, 5, 4
+		// shift the hours over 4 places.
+		// minutes = pins 15, 14, 13, 12, 11, 10
+		// shift the minutes over 4 places.
+		GPIOB->ODR = (hours << 4) | (minutes << 10);
+
 	}
 
 }
