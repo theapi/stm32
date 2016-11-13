@@ -18,19 +18,19 @@ void waitForAMoment(int moment) {
 	}
 }
 
-static void MX_GPIO_Init(void)
-{
+static void MX_GPIO_Init(void) {
 
-  GPIO_InitTypeDef GPIO_InitStruct;
+	GPIO_InitTypeDef GPIO_InitStruct;
 
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOC_CLK_ENABLE()
+	;
 
-  /*Configure GPIO pin LED 1: PC13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	/*Configure GPIO pin LED 1: PC13 */
+	GPIO_InitStruct.Pin = GPIO_PIN_13;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 }
 
@@ -41,14 +41,14 @@ int main(void) {
 	MX_GPIO_Init();
 
 	while (1) {
-		// Turn on the led
+		// Turn off the led
 		GPIOC->BSRR |= GPIO_BSRR_BS13;
 
 		// Delay
-		waitForAMoment(200000);
+		waitForAMoment(100000);
 		//HAL_Delay(50); //@todo configure clock as this is slowwww
 
-		// Turn off the led
+		// Turn on the led
 		GPIOC->BRR |= GPIO_BRR_BR13;
 
 		// Delay
