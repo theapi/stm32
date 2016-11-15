@@ -55,12 +55,17 @@ char minutes = 0;
 
 int main(void) {
 
+    HAL_Init();
+        BSP_LED_Init(LED2);
+
 	leds_init();
 	button_init();
 
 	while (1) {
 
-		dumbDelay(10000);
+		//dumbDelay(10000);
+	    HAL_Delay(100);
+
 		minutes++;
 
 		if (minutes == 60) {
@@ -77,6 +82,8 @@ int main(void) {
 		// minutes = pins 15, 14, 13, 12, 11, 10
 		// shift the minutes over 4 places.
 		GPIOB->ODR = (hours << 4) | (minutes << 10);
+
+		BSP_LED_Toggle(LED2);
 
 	}
 
