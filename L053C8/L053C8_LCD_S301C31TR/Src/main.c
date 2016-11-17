@@ -80,7 +80,13 @@ int main(void)
   MX_LCD_Init();
 
   /* USER CODE BEGIN 2 */
+  //HAL_Delay(1);
+  //LCD->RAM[LCD_RAM_REGISTER0] = 0x00000003;
+  //HAL_LCD_UpdateDisplayRequest(&hlcd);
 
+  uint32_t data = 0x00000003;
+  HAL_LCD_Write(&hlcd, LCD_RAM_REGISTER0, LCD_RAM_SEGMENT_DATA_Msk, data);
+  HAL_LCD_UpdateDisplayRequest(&hlcd);
 
   /* USER CODE END 2 */
 
@@ -94,12 +100,17 @@ int main(void)
      // uint32_t data = 8;
      // HAL_LCD_Write(&hlcd, LCD_RAM_REGISTER0, LCD_RAM_SEGMENT_DATA_Msk, data);
 
-      LCD->RAM[LCD_RAM_REGISTER0] = 0xFFFFFFFF;
-     // LCD->RAM[1] = 0xFFFFFFFF;
+      int count = 0;
 
-      HAL_LCD_UpdateDisplayRequest(&hlcd);
+      if (count == 0) {
+          count++;
+          //LCD->RAM[LCD_RAM_REGISTER0] = 0x00000001;
+        //  LCD->RAM[LCD_RAM_REGISTER0] = 0b00000000000000000000000000000001;
 
-      HAL_Delay(500);
+          //HAL_LCD_UpdateDisplayRequest(&hlcd);
+      }
+
+      //HAL_Delay(500);
 
   }
   /* USER CODE END 3 */
