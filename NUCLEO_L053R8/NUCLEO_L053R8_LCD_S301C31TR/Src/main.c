@@ -1,34 +1,8 @@
 /**
-  ******************************************************************************
-  * File Name          : main.c
-  * Description        : Main program body
-  ******************************************************************************
   *
-  * COPYRIGHT(c) 2016 STMicroelectronics
+  * Drive the 3 digit 7 segment LCD display LCD-S301C31TR at ~50Hz
+  * http://uk.farnell.com/lumex/lcd-s301c31tr/lcd-3-digit-0-31-7-87mm-reflective/dp/1838930
   *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  *
-  ******************************************************************************
   */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -97,29 +71,70 @@ int main(void)
 
    */
 
-  // Segment pin mappings
-  const uint32_t seg_e1  = 0b00000000000000000000000000100000; /* LCD_SEG5 */
-  const uint32_t seg_d1  = 0b00000000000000000000000001000000; /* LCD_SEG6 */
-  const uint32_t seg_c1  = 0b00000000000000000000000010000000; /* LCD_SEG7 */
-  const uint32_t seg_dp1 = 0b00000000000000000000000100000000; /* LCD_SEG8 */
-  const uint32_t seg_b1  = 0b00000000000000000000001000000000; /* LCD_SEG9 */
-  const uint32_t seg_g1  = 0b00000000000000000000010000000000; /* LCD_SEG10 */
-  const uint32_t seg_f1  = 0b00000000000000000000100000000000; /* LCD_SEG11 */
-  const uint32_t seg_a1  = 0b00000000000000000001000000000000; /* LCD_SEG12 */
+    /* Segment pin mappings */
+    /* Digit 1 */
+    const uint32_t seg_e1  = 0b00000000000000000000000000100000; /* LCD_SEG5 */
+    const uint32_t seg_d1  = 0b00000000000000000000000001000000; /* LCD_SEG6 */
+    const uint32_t seg_c1  = 0b00000000000000000000000010000000; /* LCD_SEG7 */
+    const uint32_t seg_dp1 = 0b00000000000000000000000100000000; /* LCD_SEG8 */
+    const uint32_t seg_b1  = 0b00000000000000000000001000000000; /* LCD_SEG9 */
+    const uint32_t seg_g1  = 0b00000000000000000000010000000000; /* LCD_SEG10 */
+    const uint32_t seg_f1  = 0b00000000000000000000100000000000; /* LCD_SEG11 */
+    const uint32_t seg_a1  = 0b00000000000000000001000000000000; /* LCD_SEG12 */
+    /* Digit 2 */
+    const uint32_t seg_e2  = 0b00000000000000000010000000000000; /* LCD_SEG13 */
+    const uint32_t seg_d2  = 0b00000000000000000100000000000000; /* LCD_SEG14 */
+    const uint32_t seg_c2  = 0b00000000000000001000000000000000; /* LCD_SEG15 */
+    const uint32_t seg_dp2 = 0b00000000000000010000000000000000; /* LCD_SEG16 */
+    const uint32_t seg_b2  = 0b00000000000000100000000000000000; /* LCD_SEG17 */
+    const uint32_t seg_g2  = 0b00000000000001000000000000000000; /* LCD_SEG18 */
+    const uint32_t seg_f2  = 0b00000000000010000000000000000000; /* LCD_SEG19 */
+    const uint32_t seg_a2  = 0b00000000000100000000000000000000; /* LCD_SEG20 */
+    /* Digit 3 */
+    const uint32_t seg_e3  = 0b00000000001000000000000000000000; /* LCD_SEG21 */
+    const uint32_t seg_d3  = 0b00000000010000000000000000000000; /* LCD_SEG22 */
+    const uint32_t seg_c3  = 0b00000000100000000000000000000000; /* LCD_SEG23 */
+    const uint32_t seg_b3  = 0b00000001000000000000000000000000; /* LCD_SEG24 */
+    const uint32_t seg_g3  = 0b00000010000000000000000000000000; /* LCD_SEG25 */
+    const uint32_t seg_f3  = 0b00000100000000000000000000000000; /* LCD_SEG26 */
+    const uint32_t seg_a3  = 0b00001000000000000000000000000000; /* LCD_SEG27 */
 
-  const uint32_t character_map[11] = {
-      seg_a1 | seg_b1 | seg_c1 | seg_d1 | seg_e1 | seg_f1,          /* 0 */
-      seg_b1 | seg_c1,                                              /* 1 */
-      seg_a1 | seg_b1 | seg_g1 | seg_e1 | seg_d1,                   /* 2 */
-      seg_a1 | seg_b1 | seg_g1 | seg_c1 | seg_d1,                   /* 3 */
-      seg_f1 | seg_b1 | seg_g1 | seg_c1,                            /* 4 */
-      seg_a1 | seg_f1 | seg_g1 | seg_c1 | seg_d1,                   /* 5 */
-      seg_f1 | seg_e1 | seg_g1 | seg_c1 | seg_d1,                   /* 6 */
-      seg_a1 | seg_b1 | seg_c1,                                     /* 7 */
-      seg_a1 | seg_b1 | seg_c1 | seg_d1 | seg_e1 | seg_f1 | seg_g1, /* 8 */
-      seg_a1 | seg_b1 | seg_c1 | seg_f1 | seg_g1,                   /* 9 */
-      seg_dp1,                                                      /* . */
-  };
+    const uint32_t character_map[32] = {
+        seg_a1 | seg_b1 | seg_c1 | seg_d1 | seg_e1 | seg_f1,          /* 0 */
+        seg_b1 | seg_c1,                                              /* 1 */
+        seg_a1 | seg_b1 | seg_g1 | seg_e1 | seg_d1,                   /* 2 */
+        seg_a1 | seg_b1 | seg_g1 | seg_c1 | seg_d1,                   /* 3 */
+        seg_f1 | seg_b1 | seg_g1 | seg_c1,                            /* 4 */
+        seg_a1 | seg_f1 | seg_g1 | seg_c1 | seg_d1,                   /* 5 */
+        seg_f1 | seg_e1 | seg_g1 | seg_c1 | seg_d1,                   /* 6 */
+        seg_a1 | seg_b1 | seg_c1,                                     /* 7 */
+        seg_a1 | seg_b1 | seg_c1 | seg_d1 | seg_e1 | seg_f1 | seg_g1, /* 8 */
+        seg_a1 | seg_b1 | seg_c1 | seg_f1 | seg_g1,                   /* 9 */
+        seg_dp1,                                                      /* . */
+
+        seg_a2 | seg_b2 | seg_c2 | seg_d2 | seg_e2 | seg_f2,          /* 0 */
+        seg_b2 | seg_c2,                                              /* 1 */
+        seg_a2 | seg_b2 | seg_g2 | seg_e2 | seg_d2,                   /* 2 */
+        seg_a2 | seg_b2 | seg_g2 | seg_c2 | seg_d2,                   /* 3 */
+        seg_f2 | seg_b2 | seg_g2 | seg_c2,                            /* 4 */
+        seg_a2 | seg_f2 | seg_g2 | seg_c2 | seg_d2,                   /* 5 */
+        seg_f2 | seg_e2 | seg_g2 | seg_c2 | seg_d2,                   /* 6 */
+        seg_a2 | seg_b2 | seg_c2,                                     /* 7 */
+        seg_a2 | seg_b2 | seg_c2 | seg_d2 | seg_e2 | seg_f2 | seg_g2, /* 8 */
+        seg_a2 | seg_b2 | seg_c2 | seg_f2 | seg_g2,                   /* 9 */
+        seg_dp2,                                                      /* . */
+
+        seg_a3 | seg_b3 | seg_c3 | seg_d3 | seg_e3 | seg_f3,          /* 0 */
+        seg_b3 | seg_c3,                                              /* 1 */
+        seg_a3 | seg_b3 | seg_g3 | seg_e3 | seg_d3,                   /* 2 */
+        seg_a3 | seg_b3 | seg_g3 | seg_c3 | seg_d3,                   /* 3 */
+        seg_f3 | seg_b3 | seg_g3 | seg_c3,                            /* 4 */
+        seg_a3 | seg_f3 | seg_g3 | seg_c3 | seg_d3,                   /* 5 */
+        seg_f3 | seg_e3 | seg_g3 | seg_c3 | seg_d3,                   /* 6 */
+        seg_a3 | seg_b3 | seg_c3,                                     /* 7 */
+        seg_a3 | seg_b3 | seg_c3 | seg_d3 | seg_e3 | seg_f3 | seg_g3, /* 8 */
+        seg_a3 | seg_b3 | seg_c3 | seg_f3 | seg_g3,                   /* 9 */
+    };
 
   int count = 0;
 
@@ -135,11 +150,12 @@ int main(void)
   /* USER CODE BEGIN 3 */
 
       LCD->RAM[LCD_RAM_REGISTER0] = character_map[count];
+      //LCD->RAM[LCD_RAM_REGISTER0] = seg_a3;
       HAL_LCD_UpdateDisplayRequest(&hlcd);
       HAL_Delay(1000);
 
       count++;
-      if (count > 10) {
+      if (count > 31) {
           count = 0;
       }
 
@@ -253,4 +269,3 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
 */ 
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
