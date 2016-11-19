@@ -84,9 +84,55 @@ int main(void)
   //LCD->RAM[LCD_RAM_REGISTER0] = 0x00000003;
   //HAL_LCD_UpdateDisplayRequest(&hlcd);
 
-  uint32_t data = 0x00000003;
-  HAL_LCD_Write(&hlcd, LCD_RAM_REGISTER0, LCD_RAM_SEGMENT_DATA_Msk, data);
-  HAL_LCD_UpdateDisplayRequest(&hlcd);
+  //uint32_t data = 0x000000FF;
+  //uint32_t data = 0xFFFFFFFF;
+  //uint32_t data = 0b00000000000000000000000001110111;
+ // uint32_t data = 0b00000000000000000000000000010100;
+  //HAL_LCD_Write(&hlcd, LCD_RAM_REGISTER0, LCD_RAM_SEGMENT_DATA_Msk, data);
+  //HAL_LCD_UpdateDisplayRequest(&hlcd);
+
+  /*
+
+             A
+        ----------
+        |         |
+       F|         |B
+        |         |
+        -----G-----
+        |         |
+       E|         |C
+        |         |  _
+        ----------- |_|DP
+             D
+
+   */
+
+  // Segment pin mappings
+  const uint32_t seg_e1  = 0b00000000000000000000000000000001; /* LCD_SEG0 */
+  const uint32_t seg_d1  = 0b00000000000000000000000000000010; /* LCD_SEG1 */
+  const uint32_t seg_c1  = 0b00000000000000000000000000000100; /* LCD_SEG2 */
+  const uint32_t seg_dp1 = 0b00000000000000000000000000001000; /* LCD_SEG3 */
+  const uint32_t seg_b1  = 0b00000000000000000000000000010000; /* LCD_SEG4 */
+  const uint32_t seg_a1  = 0b00000000000000000000000000100000; /* LCD_SEG5 */
+  const uint32_t seg_f1  = 0b00000000000000000000000001000000; /* LCD_SEG6 */
+  const uint32_t seg_g1  = 0b00000000000000000000000010000000; /* LCD_SEG7 */
+//const uint32_t seg_g1  = 0b00000000000000000000000100000000; /* LCD_SEG8 */
+
+  const uint32_t character_map[11] = {
+      seg_a1 | seg_b1 | seg_c1 | seg_d1 | seg_e1 | seg_f1,          /* 0 */
+      seg_b1 | seg_c1,                                              /* 1 */
+      seg_a1 | seg_b1 | seg_g1 | seg_e1 | seg_d1,                   /* 2 */
+      seg_a1 | seg_b1 | seg_g1 | seg_c1 | seg_d1,                   /* 3 */
+      seg_f1 | seg_b1 | seg_g1 | seg_c1,                            /* 4 */
+      seg_a1 | seg_f1 | seg_g1 | seg_c1 | seg_d1,                   /* 5 */
+      seg_f1 | seg_e1 | seg_g1 | seg_c1 | seg_d1,                   /* 6 */
+      seg_a1 | seg_b1 | seg_c1,                                     /* 7 */
+      seg_a1 | seg_b1 | seg_c1 | seg_d1 | seg_e1 | seg_f1 | seg_g1, /* 8 */
+      seg_a1 | seg_b1 | seg_c1 | seg_f1 | seg_g1,                   /* 9 */
+      seg_dp1,                                                      /* . */
+  };
+
+  int count = 0;
 
   /* USER CODE END 2 */
 
@@ -97,20 +143,17 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-     // uint32_t data = 8;
-     // HAL_LCD_Write(&hlcd, LCD_RAM_REGISTER0, LCD_RAM_SEGMENT_DATA_Msk, data);
 
-      int count = 0;
+      /* HAL_LCD_Write does not apply changes after the first one, why? */
+      /* HAL_LCD_Write(&hlcd, LCD_RAM_REGISTER0, LCD_RAM_SEGMENT_DATA_Msk, character_map[0]); */
+      LCD->RAM[LCD_RAM_REGISTER0] = character_map[count];
+      HAL_LCD_UpdateDisplayRequest(&hlcd);
+      HAL_Delay(1000);
 
-      if (count == 0) {
-          count++;
-          //LCD->RAM[LCD_RAM_REGISTER0] = 0x00000001;
-        //  LCD->RAM[LCD_RAM_REGISTER0] = 0b00000000000000000000000000000001;
-
-          //HAL_LCD_UpdateDisplayRequest(&hlcd);
+      count++;
+      if (count > 10) {
+          count = 0;
       }
-
-      //HAL_Delay(500);
 
   }
   /* USER CODE END 3 */
