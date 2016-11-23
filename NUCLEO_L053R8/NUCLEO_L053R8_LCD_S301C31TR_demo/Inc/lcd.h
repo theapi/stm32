@@ -19,7 +19,6 @@ extern void Error_Handler(void);
 
 void MX_LCD_Init(void);
 void LCD_display(LCD_HandleTypeDef *hlcd, uint16_t num);
-uint32_t LCD_digit(uint8_t digit, uint8_t num);
 uint32_t LCD_digit1(uint8_t num);
 uint32_t LCD_digit2(uint8_t num);
 uint32_t LCD_digit3(uint8_t num);
