@@ -150,7 +150,7 @@ int main(void)
   /* USER CODE BEGIN 3 */
 
       LCD->RAM[LCD_RAM_REGISTER0] = character_map[count];
-      //LCD->RAM[LCD_RAM_REGISTER0] = seg_a3;
+      //LCD->RAM[LCD_RAM_REGISTER0] = 0xFFFFFFFF;
       HAL_LCD_UpdateDisplayRequest(&hlcd);
       HAL_Delay(1000);
 
