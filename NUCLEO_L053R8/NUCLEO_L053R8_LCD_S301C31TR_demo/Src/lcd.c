@@ -20,22 +20,22 @@ void LCD_display(LCD_HandleTypeDef *hlcd, uint16_t num) {
         }
     }
 
-    LCD->RAM[LCD_RAM_REGISTER0] = LCD_digit(hlcd, 1, hundreds)
-            | LCD_digit(hlcd, 2, tens) | LCD_digit(hlcd, 3, singles);
+    LCD->RAM[LCD_RAM_REGISTER0] = LCD_digit(1, hundreds) | LCD_digit(2, tens)
+            | LCD_digit(3, singles);
     HAL_LCD_UpdateDisplayRequest(hlcd);
 }
 
-uint32_t LCD_digit(LCD_HandleTypeDef *hlcd, uint8_t digit, uint8_t num) {
+uint32_t LCD_digit(uint8_t digit, uint8_t num) {
     uint32_t data;
     switch (digit) {
     case 1:
-        data = LCD_digit1(hlcd, num);
+        data = LCD_digit1(num);
         break;
     case 2:
-        data = LCD_digit2(hlcd, num);
+        data = LCD_digit2(num);
         break;
     case 3:
-        data = LCD_digit3(hlcd, num);
+        data = LCD_digit3(num);
         break;
     default:
         data = LCD_DIGIT1_BLANK;
@@ -44,7 +44,7 @@ uint32_t LCD_digit(LCD_HandleTypeDef *hlcd, uint8_t digit, uint8_t num) {
     return data;
 }
 
-uint32_t LCD_digit1(LCD_HandleTypeDef *hlcd, uint8_t num) {
+uint32_t LCD_digit1(uint8_t num) {
     uint32_t data;
     switch (num) {
     case 0:
@@ -84,7 +84,7 @@ uint32_t LCD_digit1(LCD_HandleTypeDef *hlcd, uint8_t num) {
     return data;
 }
 
-uint32_t LCD_digit2(LCD_HandleTypeDef *hlcd, uint8_t num) {
+uint32_t LCD_digit2(uint8_t num) {
     uint32_t data;
     switch (num) {
     case 0:
@@ -124,7 +124,7 @@ uint32_t LCD_digit2(LCD_HandleTypeDef *hlcd, uint8_t num) {
     return data;
 }
 
-uint32_t LCD_digit3(LCD_HandleTypeDef *hlcd, uint8_t num) {
+uint32_t LCD_digit3(uint8_t num) {
     uint32_t data;
     switch (num) {
     case 0:
