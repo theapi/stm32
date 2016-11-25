@@ -1,7 +1,9 @@
 /**
- * Systick clock: 131.072kHz
- * RTC clock: 32.768
+ * Systick clock: 131.072KHz
+ * RTC clock: 32.768KHz
  * RTC clock output on PA8
+ * Regulator voltage output Scale 3 mode
+ * Total current: 323.5µA
  */
 
 /* Includes ------------------------------------------------------------------*/
@@ -65,8 +67,8 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-      HAL_Delay(500);
+      //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+      //HAL_Delay(500);
 
   }
   /* USER CODE END 3 */
@@ -84,7 +86,7 @@ void SystemClock_Config(void)
 
     /**Configure the main internal regulator output voltage 
     */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
@@ -152,5 +154,4 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler */ 
 }
-
 
