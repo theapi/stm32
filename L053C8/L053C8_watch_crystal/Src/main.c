@@ -3,7 +3,7 @@
  * RTC clock: 32.768KHz
  * RTC clock output on PA8
  * Regulator voltage output Scale 3 mode
- * Total current: 323.5µA
+ * Total current: 49µA
  */
 
 /* Includes ------------------------------------------------------------------*/
