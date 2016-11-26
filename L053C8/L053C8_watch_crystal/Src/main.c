@@ -3,7 +3,8 @@
  * RTC clock: 32.768KHz
  * RTC clock output on PA8
  * Regulator voltage output Scale 3 mode
- * Total current: 49µA
+ * Total awake current: 49µA
+ * Total stop current, with RTC clock still ticking: 4µA
  */
 
 /* Includes ------------------------------------------------------------------*/
@@ -57,6 +58,18 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
+  /* Enable Ultra low power mode */
+      HAL_PWREx_EnableUltraLowPower();
+
+      HAL_PWR_DisablePVD();
+
+
+  /* Disable GPIOs clock */
+      //
+      __HAL_RCC_GPIOB_CLK_DISABLE();
+      __HAL_RCC_GPIOC_CLK_DISABLE();
+      __HAL_RCC_GPIOH_CLK_DISABLE();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -69,6 +82,11 @@ int main(void)
 
       //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
       //HAL_Delay(500);
+
+      HAL_Delay(2000);
+      //__HAL_RCC_GPIOA_CLK_DISABLE();
+      /* Enter Stop Mode */
+      HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFE);
 
   }
   /* USER CODE END 3 */
@@ -155,3 +173,32 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler */ 
 }
 
+#ifdef USE_FULL_ASSERT
+
+/**
+   * @brief Reports the name of the source file and the source line number
+   * where the assert_param error has occurred.
+   * @param file: pointer to the source file name
+   * @param line: assert_param error line source number
+   * @retval None
+   */
+void assert_failed(uint8_t* file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+    ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+
+}
+
+#endif
+
+/**
+  * @}
+  */ 
+
+/**
+  * @}
+*/ 
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
