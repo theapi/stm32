@@ -11,7 +11,6 @@
 #include "lcd.h"
 #include "gpio.h"
 
-
 int main(void) {
 
     /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -24,13 +23,18 @@ int main(void) {
     MX_GPIO_Init();
     MX_LCD_Init();
 
+    /* Test the lcd first */
+    LCD_display(&hlcd, 888);
+    HAL_Delay(1000);
+
     int count = 0;
     while (1) {
+
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 
         /* Display the count on the 3 digit lcd screen */
         LCD_display(&hlcd, count);
         HAL_Delay(1000);
-        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 
         count++;
         if (count > 999) {
