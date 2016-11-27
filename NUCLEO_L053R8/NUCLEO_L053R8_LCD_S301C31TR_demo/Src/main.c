@@ -30,6 +30,7 @@ int main(void) {
         /* Display the count on the 3 digit lcd screen */
         LCD_display(&hlcd, count);
         HAL_Delay(1000);
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 
         count++;
         if (count > 999) {
