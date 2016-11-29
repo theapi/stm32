@@ -2,8 +2,8 @@
 <targetDefinitions xmlns="http://openstm32.org/stm32TargetDefinitions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openstm32.org/stm32TargetDefinitions stm32TargetDefinitions.xsd">
   <board id="kitchen_timer">
     <name>kitchen_timer</name>
-    <mcuId>STM32L053C8Tx</mcuId>  <!-- mcu-->
+    <mcuId>stm32l053c8tx</mcuId>
     <dbgIF>SWD</dbgIF>
-    <dbgDEV />
+    <dbgDEV>ST-LinkV2</dbgDEV>
   </board>
 </targetDefinitions>
