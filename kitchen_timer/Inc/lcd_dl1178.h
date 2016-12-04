@@ -49,15 +49,15 @@ Digits:  12  34
 
 1 = B C
 
-Multiplexing:
-1 = B C
-	Digit 1 = COM1:SEG7, COM3:SEG7
-	Digit 2 = COM1:SEG5, COM3:SEG5
-	Digit 3 = COM1:SEG3, COM3:SEG3
-	Digit 4 = COM1:SEG1, COM3:SEG1
-2 = A B D E G
-	Digit 1 = COM1:SEG8, COM1:SEG7, COM4:SEG7, COM3:SEG8, COM2:SEG7
-	...
+ Multiplexing:
+ 1 = B C
+     Digit 1 = COM1:SEG7, COM3:SEG7
+     Digit 2 = COM1:SEG5, COM3:SEG5
+     Digit 3 = COM1:SEG3, COM3:SEG3
+     Digit 4 = COM1:SEG1, COM3:SEG1
+ 2 = A B D E G
+     Digit 1 = COM1:SEG8, COM1:SEG7, COM4:SEG7, COM3:SEG8, COM2:SEG7
+ ...
 
  *
  */
@@ -66,21 +66,21 @@ Multiplexing:
  * Digit number, number to display, COM
  */
 uint32_t lcd_digits[4][11][4] = {
-	/* Digit 1 */
+    /* Digit 1 */
     {
-    	/* 1 */
-        { LCD_SEG_7, 0, LCD_SEG_7, 0 },
-		/* 2 */
-		{
-			LCD_SEG_7 | LCD_SEG_8, /* COM1 */
-			LCD_SEG_7,             /* COM2 */
-			LCD_SEG_8,             /* COM3 */
-			LCD_SEG_7              /* COM4 */
-		},
+        /* 1 */
+        {LCD_SEG_7, 0, LCD_SEG_7, 0},
+        /* 2 */
+        {
+             LCD_SEG_7 | LCD_SEG_8, /* COM1 */
+             LCD_SEG_7,             /* COM2 */
+             LCD_SEG_8,             /* COM3 */
+             LCD_SEG_7              /* COM4 */
+        },
     },
-	{ /* Digit 2 */
-		{ LCD_SEG_5, 0, LCD_SEG_5, 0 }, /* 1 */
-	},
+    { /* Digit 2 */
+        {LCD_SEG_5, 0, LCD_SEG_5, 0}, /* 1 */
+    },
 };
 
 
