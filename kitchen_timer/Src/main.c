@@ -39,6 +39,8 @@
 
 /* USER CODE BEGIN Includes */
 
+#include "lcd_dl1178.h"
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
