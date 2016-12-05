@@ -98,6 +98,8 @@ int main(void)
     LCD->RAM[LCD_RAM_REGISTER7] = 0xFFFFFFFF;
     HAL_LCD_UpdateDisplayRequest(&hlcd);
 
+    int count = 1;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,6 +109,8 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
+        //LCD_display(&hlcd, count);
+        //HAL_Delay(1000);
 
     }
   /* USER CODE END 3 */

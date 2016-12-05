@@ -29,6 +29,8 @@
  extern "C" {
 #endif
 
+#include "stm32l0xx_hal.h"
+#include "main.h"
 
 #define LCD_SEG_1 0b00000000000000000000000000000001
 #define LCD_SEG_2 0b00000000000000000000000000000010
@@ -65,7 +67,7 @@ Digits:  12  34
 /**
  * Digit number, number to display, COM
  */
-uint32_t lcd_digits[4][11][4] = {
+static uint32_t lcd_digits[4][11][4] = {
     /* Digit 1 */
     {
         /* 1 */
@@ -78,16 +80,16 @@ uint32_t lcd_digits[4][11][4] = {
              LCD_SEG_7              /* COM4 */
         },
     },
-    { /* Digit 2 */
-        {LCD_SEG_5, 0, LCD_SEG_5, 0}, /* 1 */
+    /* Digit 2 */
+    {
+        /* 1 */
+        {LCD_SEG_5, 0, LCD_SEG_5, 0},
     },
 };
 
 
 void LCD_display(LCD_HandleTypeDef *hlcd, uint16_t num);
-uint32_t LCD_digit1(uint8_t num);
-uint32_t LCD_digit2(uint8_t num);
-uint32_t LCD_digit3(uint8_t num);
+
 
 
 #ifdef __cplusplus
