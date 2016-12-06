@@ -55,15 +55,15 @@ void MX_LCD_Init(void)
   hlcd.Init.Prescaler = LCD_PRESCALER_4;
   hlcd.Init.Divider = LCD_DIVIDER_16;
   hlcd.Init.Duty = LCD_DUTY_1_4;
-  hlcd.Init.Bias = LCD_BIAS_1_2;
+  hlcd.Init.Bias = LCD_BIAS_1_4;
   hlcd.Init.VoltageSource = LCD_VOLTAGESOURCE_INTERNAL;
   hlcd.Init.Contrast = LCD_CONTRASTLEVEL_4;
   hlcd.Init.DeadTime = LCD_DEADTIME_0;
-  hlcd.Init.PulseOnDuration = LCD_PULSEONDURATION_1;
+  hlcd.Init.PulseOnDuration = LCD_PULSEONDURATION_0;
   hlcd.Init.HighDrive = LCD_HIGHDRIVE_0;
   hlcd.Init.BlinkMode = LCD_BLINKMODE_OFF;
   hlcd.Init.BlinkFrequency = LCD_BLINKFREQUENCY_DIV8;
-  hlcd.Init.MuxSegment = LCD_MUXSEGMENT_ENABLE;
+  hlcd.Init.MuxSegment = LCD_MUXSEGMENT_DISABLE;
   if (HAL_LCD_Init(&hlcd) != HAL_OK)
   {
     Error_Handler();
