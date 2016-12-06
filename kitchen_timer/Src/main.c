@@ -86,7 +86,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-
+/*
     LCD->RAM[LCD_RAM_REGISTER0] = 0xFFFFFFFF;
     //LCD->RAM[LCD_RAM_REGISTER0] = 0b000000000000000000000000000000011;
     //LCD->RAM[LCD_RAM_REGISTER1] = 0xFFFFFFFF;
@@ -96,6 +96,38 @@ int main(void)
     //LCD->RAM[LCD_RAM_REGISTER5] = 0xFFFFFFFF;
     LCD->RAM[LCD_RAM_REGISTER6] = 0xFFFFFFFF;
     //LCD->RAM[LCD_RAM_REGISTER7] = 0xFFFFFFFF;
+    HAL_LCD_UpdateDisplayRequest(&hlcd);
+*/
+
+
+/*
+  LCD->RAM[LCD_RAM_REGISTER0] = LCD_SEG_8;
+  LCD->RAM[LCD_RAM_REGISTER1] = 0x0;
+
+  LCD->RAM[LCD_RAM_REGISTER2] = LCD_SEG_8;
+  LCD->RAM[LCD_RAM_REGISTER3] = 0x0;
+
+  LCD->RAM[LCD_RAM_REGISTER4] = LCD_SEG_8;
+  LCD->RAM[LCD_RAM_REGISTER5] = 0x0;
+
+  LCD->RAM[LCD_RAM_REGISTER6] = LCD_SEG_8;
+  LCD->RAM[LCD_RAM_REGISTER7] = 0x0;
+
+  HAL_LCD_UpdateDisplayRequest(&hlcd);
+*/
+
+    LCD->RAM[LCD_RAM_REGISTER0] = LCD_SEG_7;
+    LCD->RAM[LCD_RAM_REGISTER1] = 0x0;
+
+    LCD->RAM[LCD_RAM_REGISTER2] = 0x0;
+    LCD->RAM[LCD_RAM_REGISTER3] = 0x0;
+
+    LCD->RAM[LCD_RAM_REGISTER4] = LCD_SEG_7;
+    LCD->RAM[LCD_RAM_REGISTER5] = 0x0;
+
+    LCD->RAM[LCD_RAM_REGISTER6] = 0x0;
+    LCD->RAM[LCD_RAM_REGISTER7] = 0x0;
+
     HAL_LCD_UpdateDisplayRequest(&hlcd);
 
     int count = 1;
@@ -109,7 +141,7 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-        LCD_display(&hlcd, count);
+        //LCD_display(&hlcd, count);
         HAL_Delay(1000);
 
     }
