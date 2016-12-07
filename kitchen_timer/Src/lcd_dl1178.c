@@ -26,57 +26,64 @@ Digits:  12  34
 
 #include "lcd_dl1178.h"
 
+// {LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8},
 /**
  * Digit number, number to display, COM
  */
 const uint32_t lcd_digits[4][11][4] = {
     /* Digit 1 */
     {
+        /* 0 */
+        {
+             LCD_SEG_8 | LCD_SEG_7, /* COM1 */
+             LCD_SEG_8,             /* COM2 */
+             LCD_SEG_8 | LCD_SEG_7, /* COM3 */
+             LCD_SEG_7              /* COM4 */
+        },
         /* 1 */
         {LCD_SEG_7, 0, LCD_SEG_7, 0},
         /* 2 */
-        {
-             LCD_SEG_7 | LCD_SEG_8, /* COM1 */
-             LCD_SEG_7,             /* COM2 */
-             LCD_SEG_8,             /* COM3 */
-             LCD_SEG_7              /* COM4 */
-        },
+        {LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7, LCD_SEG_8, LCD_SEG_7},
+        /* 3 */
+        {LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7, LCD_SEG_7, LCD_SEG_7},
     },
     /* Digit 2 */
     {
+        /* 0 */
+        {
+             LCD_SEG_6 | LCD_SEG_5, /* COM1 */
+             LCD_SEG_6,             /* COM2 */
+             LCD_SEG_6 | LCD_SEG_5, /* COM3 */
+             LCD_SEG_5              /* COM4 */
+        },
         /* 1 */
         {LCD_SEG_5, 0, LCD_SEG_5, 0},
         /* 2 */
-        {
-             LCD_SEG_5 | LCD_SEG_6, /* COM1 */
-             LCD_SEG_5,             /* COM2 */
-             LCD_SEG_6,             /* COM3 */
-             LCD_SEG_5              /* COM4 */
-        },
+        {LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5, LCD_SEG_6, LCD_SEG_5},
+        /* 3 */
+        {LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5, LCD_SEG_5, LCD_SEG_5},
     },
     /* Digit 3 */
     {
+        /* 0 */
+        {LCD_SEG_4 | LCD_SEG_3, LCD_SEG_4, LCD_SEG_4 | LCD_SEG_3, LCD_SEG_3},
         /* 1 */
         {LCD_SEG_3, 0, LCD_SEG_3, 0},
         /* 2 */
-        {
-             LCD_SEG_3 | LCD_SEG_4, /* COM1 */
-             LCD_SEG_3,             /* COM2 */
-             LCD_SEG_4,             /* COM3 */
-             LCD_SEG_3              /* COM4 */
-        },
+        {LCD_SEG_3 | LCD_SEG_4,LCD_SEG_3, LCD_SEG_4, LCD_SEG_3},
+        /* 3 */
+        {LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3, LCD_SEG_3, LCD_SEG_3},
     },
     /* Digit 4 */
     {
+        /* 0 */
+        {LCD_SEG_2 | LCD_SEG_1, LCD_SEG_2, LCD_SEG_2 | LCD_SEG_1, LCD_SEG_1},
         /* 1 */
         {LCD_SEG_1, 0, LCD_SEG_1, 0},
         /* 2 */
-        {
-             LCD_SEG_1 | LCD_SEG_2, /* COM1 */
-             LCD_SEG_1,             /* COM2 */
-             LCD_SEG_2,             /* COM3 */
-             LCD_SEG_1              /* COM4 */
-        },
+        {LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1, LCD_SEG_2, LCD_SEG_1},
+        /* 3 */
+        {LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1, LCD_SEG_1, LCD_SEG_1},
     },
 };
 

@@ -131,7 +131,7 @@ int main(void)
 
     HAL_LCD_UpdateDisplayRequest(&hlcd);
 */
-    int count = 1;
+    int count = 3;
 
   /* USER CODE END 2 */
 
