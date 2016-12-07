@@ -46,6 +46,18 @@ const uint32_t lcd_digits[4][11][4] = {
         {LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7, LCD_SEG_8, LCD_SEG_7},
         /* 3 */
         {LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7, LCD_SEG_7, LCD_SEG_7},
+        /* 4 */
+        {LCD_SEG_7, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7, 0},
+        /* 5 */
+        {LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7, LCD_SEG_7},
+        /* 6 */
+        {LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7},
+        /* 7 */
+        {LCD_SEG_7 | LCD_SEG_8, 0, LCD_SEG_7, 0},
+        /* 8 */
+        {LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7},
+        /* 9 */
+        {LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7 | LCD_SEG_8, LCD_SEG_7, LCD_SEG_7},
     },
     /* Digit 2 */
     {
@@ -62,6 +74,18 @@ const uint32_t lcd_digits[4][11][4] = {
         {LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5, LCD_SEG_6, LCD_SEG_5},
         /* 3 */
         {LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5, LCD_SEG_5, LCD_SEG_5},
+        /* 4 */
+        {LCD_SEG_5, LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5, 0},
+        /* 5 */
+        {LCD_SEG_6, LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5, LCD_SEG_5},
+        /* 6 */
+        {LCD_SEG_6, LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5},
+        /* 7 */
+        {LCD_SEG_5 | LCD_SEG_6, 0, LCD_SEG_5, 0},
+        /* 8 */
+        {LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5},
+        /* 9 */
+        {LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5, LCD_SEG_5},
     },
     /* Digit 3 */
     {
@@ -73,6 +97,18 @@ const uint32_t lcd_digits[4][11][4] = {
         {LCD_SEG_3 | LCD_SEG_4,LCD_SEG_3, LCD_SEG_4, LCD_SEG_3},
         /* 3 */
         {LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3, LCD_SEG_3, LCD_SEG_3},
+        /* 4 */
+        {LCD_SEG_3, LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3, 0},
+        /* 5 */
+        {LCD_SEG_4, LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3, LCD_SEG_3},
+        /* 6 */
+        {LCD_SEG_4, LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3},
+        /* 7 */
+        {LCD_SEG_3 | LCD_SEG_4, 0, LCD_SEG_3, 0},
+        /* 8 */
+        {LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3},
+        /* 9 */
+        {LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3 | LCD_SEG_4, LCD_SEG_3, LCD_SEG_3},
     },
     /* Digit 4 */
     {
@@ -84,6 +120,18 @@ const uint32_t lcd_digits[4][11][4] = {
         {LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1, LCD_SEG_2, LCD_SEG_1},
         /* 3 */
         {LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1, LCD_SEG_1, LCD_SEG_1},
+        /* 4 */
+        {LCD_SEG_1, LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1, 0},
+        /* 5 */
+        {LCD_SEG_2, LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1, LCD_SEG_2},
+        /* 6 */
+        {LCD_SEG_2, LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1},
+        /* 7 */
+        {LCD_SEG_1 | LCD_SEG_2, 0, LCD_SEG_1, 0},
+        /* 8 */
+        {LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1},
+        /* 9 */
+        {LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1, LCD_SEG_1},
     },
 };
 
