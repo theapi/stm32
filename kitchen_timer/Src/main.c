@@ -116,6 +116,7 @@ int main(void)
   HAL_LCD_UpdateDisplayRequest(&hlcd);
 */
 
+  /*
     LCD->RAM[LCD_RAM_REGISTER0] = LCD_SEG_7;
     LCD->RAM[LCD_RAM_REGISTER1] = 0x0;
 
@@ -129,7 +130,7 @@ int main(void)
     LCD->RAM[LCD_RAM_REGISTER7] = 0x0;
 
     HAL_LCD_UpdateDisplayRequest(&hlcd);
-
+*/
     int count = 1;
 
   /* USER CODE END 2 */
@@ -141,7 +142,7 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-        //LCD_display(&hlcd, count);
+        LCD_display(&hlcd, count);
         HAL_Delay(1000);
 
     }

@@ -82,29 +82,35 @@ const uint32_t lcd_digits[4][11][4] = {
 
 void LCD_display(LCD_HandleTypeDef *hlcd, uint16_t num) {
 
-    /* First digit */
-    LCD->RAM[LCD_RAM_REGISTER0] = lcd_digits[0][num][0];
-    LCD->RAM[LCD_RAM_REGISTER2] = lcd_digits[0][num][1];
-    LCD->RAM[LCD_RAM_REGISTER4] = lcd_digits[0][num][2];
-    LCD->RAM[LCD_RAM_REGISTER6] = lcd_digits[0][num][3];
+    /*
+      LCD->RAM[LCD_RAM_REGISTER0] = LCD_SEG_7;
+      LCD->RAM[LCD_RAM_REGISTER1] = 0x0;
 
-    /* Second digit */
-    LCD->RAM[LCD_RAM_REGISTER0] = lcd_digits[1][num][0];
-    LCD->RAM[LCD_RAM_REGISTER2] = lcd_digits[1][num][1];
-    LCD->RAM[LCD_RAM_REGISTER4] = lcd_digits[1][num][2];
-    LCD->RAM[LCD_RAM_REGISTER6] = lcd_digits[1][num][3];
+      LCD->RAM[LCD_RAM_REGISTER2] = 0x0;
+      LCD->RAM[LCD_RAM_REGISTER3] = 0x0;
 
-    /* Third digit */
-    LCD->RAM[LCD_RAM_REGISTER0] = lcd_digits[2][num][0];
-    LCD->RAM[LCD_RAM_REGISTER2] = lcd_digits[2][num][1];
-    LCD->RAM[LCD_RAM_REGISTER4] = lcd_digits[2][num][2];
-    LCD->RAM[LCD_RAM_REGISTER6] = lcd_digits[2][num][3];
+      LCD->RAM[LCD_RAM_REGISTER4] = LCD_SEG_7;
+      LCD->RAM[LCD_RAM_REGISTER5] = 0x0;
 
-    /* Forth digit */
-    LCD->RAM[LCD_RAM_REGISTER0] = lcd_digits[3][num][0];
-    LCD->RAM[LCD_RAM_REGISTER2] = lcd_digits[3][num][1];
-    LCD->RAM[LCD_RAM_REGISTER4] = lcd_digits[3][num][2];
-    LCD->RAM[LCD_RAM_REGISTER6] = lcd_digits[3][num][3];
+      LCD->RAM[LCD_RAM_REGISTER6] = 0x0;
+      LCD->RAM[LCD_RAM_REGISTER7] = 0x0;
+
+      HAL_LCD_UpdateDisplayRequest(hlcd);
+  */
+
+
+    LCD->RAM[LCD_RAM_REGISTER0] = lcd_digits[0][num][0] | lcd_digits[1][num][0]
+            | lcd_digits[2][num][0] | lcd_digits[3][num][0];
+
+    LCD->RAM[LCD_RAM_REGISTER2] = lcd_digits[0][num][1] | lcd_digits[1][num][1]
+            | lcd_digits[2][num][1] | lcd_digits[3][num][1];
+
+    LCD->RAM[LCD_RAM_REGISTER4] = lcd_digits[0][num][2] | lcd_digits[1][num][2]
+            | lcd_digits[2][num][2] | lcd_digits[3][num][2];
+
+    LCD->RAM[LCD_RAM_REGISTER6] = lcd_digits[0][num][3] | lcd_digits[1][num][3]
+            | lcd_digits[2][num][3] | lcd_digits[3][num][3];
+
 
     HAL_LCD_UpdateDisplayRequest(hlcd);
 }

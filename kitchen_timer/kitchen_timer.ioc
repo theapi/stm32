@@ -1,13 +1,13 @@
 #MicroXplorer Configuration settings - do not modify
 File.Version=6
 KeepUserPlacement=false
-LCD.Contrast=LCD_CONTRASTLEVEL_4
-LCD.DeadTime=LCD_DEADTIME_0
+LCD.Contrast=LCD_CONTRASTLEVEL_5
+LCD.DeadTime=LCD_DEADTIME_1
 LCD.Divider=LCD_DIVIDER_16
-LCD.HighDrive=LCD_HIGHDRIVE_0
+LCD.HighDrive=LCD_HIGHDRIVE_1
 LCD.IPParameters=Contrast,Prescaler,Divider,DeadTime,PulseOnDuration,HighDrive
 LCD.Prescaler=LCD_PRESCALER_4
-LCD.PulseOnDuration=LCD_PULSEONDURATION_0
+LCD.PulseOnDuration=LCD_PULSEONDURATION_1
 Mcu.Family=STM32L0
 Mcu.IP0=LCD
 Mcu.IP1=NVIC

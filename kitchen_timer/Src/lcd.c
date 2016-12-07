@@ -57,10 +57,10 @@ void MX_LCD_Init(void)
   hlcd.Init.Duty = LCD_DUTY_1_4;
   hlcd.Init.Bias = LCD_BIAS_1_4;
   hlcd.Init.VoltageSource = LCD_VOLTAGESOURCE_INTERNAL;
-  hlcd.Init.Contrast = LCD_CONTRASTLEVEL_4;
-  hlcd.Init.DeadTime = LCD_DEADTIME_0;
-  hlcd.Init.PulseOnDuration = LCD_PULSEONDURATION_0;
-  hlcd.Init.HighDrive = LCD_HIGHDRIVE_0;
+  hlcd.Init.Contrast = LCD_CONTRASTLEVEL_5;
+  hlcd.Init.DeadTime = LCD_DEADTIME_1;
+  hlcd.Init.PulseOnDuration = LCD_PULSEONDURATION_1;
+  hlcd.Init.HighDrive = LCD_HIGHDRIVE_1;
   hlcd.Init.BlinkMode = LCD_BLINKMODE_OFF;
   hlcd.Init.BlinkFrequency = LCD_BLINKFREQUENCY_DIV8;
   hlcd.Init.MuxSegment = LCD_MUXSEGMENT_DISABLE;
@@ -68,6 +68,10 @@ void MX_LCD_Init(void)
   {
     Error_Handler();
   }
+
+    /**Enable the High Driver 
+    */
+  __HAL_LCD_HIGHDRIVER_ENABLE(&hlcd);
 
 }
 
