@@ -61,6 +61,11 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
+// @todo use interrupts instead of polling
+
+uint32_t previous = 0;
+uint16_t interval = 1000;
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -99,18 +104,35 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-        LCD_display(&hlcd, minutes, seconds);
-        HAL_Delay(1000);
 
-        seconds++;
-        if (seconds > 59) {
-            seconds = 0;
-            minutes++;
-            if (minutes > 99) {
-                minutes = 0;
+        //HAL_Delay(1000);
+        uint32_t now = HAL_GetTick();
+        if (now - previous >= interval) {
+
+            // Update the screen
+            LCD_display(&hlcd, minutes, seconds);
+            seconds++;
+            if (seconds > 59) {
                 seconds = 0;
+                minutes++;
+                if (minutes > 99) {
+                    minutes = 0;
+                    seconds = 0;
+                }
+            }
+
+            // Button polling
+            if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4)) {
+
+            }
+            if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5)) {
+
+            }
+            if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)) {
+
             }
         }
+
 
     }
   /* USER CODE END 3 */
