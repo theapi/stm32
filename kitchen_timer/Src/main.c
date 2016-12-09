@@ -104,7 +104,6 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-
         //HAL_Delay(1000);
         uint32_t now = HAL_GetTick();
         if (now - previous >= interval) {
@@ -120,19 +119,19 @@ int main(void)
                     seconds = 0;
                 }
             }
-
-            // Button polling
-            if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4)) {
-
-            }
-            if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5)) {
-
-            }
-            if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)) {
-
-            }
         }
 
+        // Button polling
+        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4)) {
+            minutes = 0;
+        }
+        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5)) {
+            seconds = 0;
+        }
+        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)) {
+            minutes = 0;
+            seconds = 0;
+        }
 
     }
   /* USER CODE END 3 */
