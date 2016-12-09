@@ -107,7 +107,7 @@ int main(void)
         //HAL_Delay(1000);
         uint32_t now = HAL_GetTick();
         if (now - previous >= interval) {
-
+            previous = now;
             // Update the screen
             LCD_display(&hlcd, minutes, seconds);
             seconds++;
