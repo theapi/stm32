@@ -33,13 +33,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32l0xx_hal.h"
-#include "lcd.h"
-#include "rtc.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
-#include "lcd_dl1178.h"
 
 /* USER CODE END Includes */
 
@@ -61,11 +57,6 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
-// @todo use interrupts instead of polling
-
-uint32_t previous = 0;
-uint16_t interval = 1000;
-
 /* USER CODE END 0 */
 
 int main(void)
@@ -85,63 +76,34 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_LCD_Init();
-  MX_RTC_Init();
 
   /* USER CODE BEGIN 2 */
 
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+  /* Disable GPIOs clock */
+    __HAL_RCC_GPIOA_CLK_DISABLE();
+    __HAL_RCC_GPIOB_CLK_DISABLE();
+    __HAL_RCC_GPIOC_CLK_DISABLE();
+    __HAL_RCC_GPIOH_CLK_DISABLE();
 
-    uint8_t minutes = 0;
-    uint8_t seconds = 0;
-    uint8_t update_display = 1;
+  /* Enable Ultra low power mode */
+    HAL_PWREx_EnableUltraLowPower();
+
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-    while (1) {
+  while (1)
+  {
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+      HAL_Delay(1000);
 
-        if (update_display) {
-            update_display = 0;
-            // Update the screen
-            LCD_display(&hlcd, minutes, seconds);
-        }
+      /* Enter Stop Mode */
+          HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
-        // Button polling
-        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4)) {
-            minutes = 0;
-            update_display = 1;
-        }
-        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5)) {
-            seconds = 0;
-            update_display = 1;
-        }
-        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)) {
-            minutes = 0;
-            seconds = 0;
-            update_display = 1;
-        }
-
-        uint32_t now = HAL_GetTick();
-        if (now - previous >= interval) {
-            previous = now;
-            seconds++;
-            if (seconds > 59) {
-                seconds = 0;
-                minutes++;
-                if (minutes > 99) {
-                    minutes = 0;
-                    seconds = 0;
-                }
-            }
-            update_display = 1;
-        }
-
-    }
+  }
   /* USER CODE END 3 */
 
 }
@@ -153,7 +115,6 @@ void SystemClock_Config(void)
 
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_PeriphCLKInitTypeDef PeriphClkInit;
 
     /**Configure the main internal regulator output voltage 
     */
@@ -161,12 +122,13 @@ void SystemClock_Config(void)
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE|RCC_OSCILLATORTYPE_MSI;
-  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
-  RCC_OscInitStruct.MSIState = RCC_MSI_ON;
-  RCC_OscInitStruct.MSICalibrationValue = 0;
-  RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_4;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = 16;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLLMUL_4;
+  RCC_OscInitStruct.PLL.PLLDIV = RCC_PLLDIV_2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -176,19 +138,12 @@ void SystemClock_Config(void)
     */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_MSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
-  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -217,9 +172,10 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler */
-    /* User can add his own implementation to report the HAL error return state */
-    while (1) {
-    }
+  /* User can add his own implementation to report the HAL error return state */
+  while(1) 
+  {
+  }
   /* USER CODE END Error_Handler */ 
 }
 
