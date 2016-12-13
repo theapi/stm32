@@ -61,10 +61,12 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
-// @todo use interrupts instead of polling
 
 uint32_t previous = 0;
 uint16_t interval = 1000;
+uint8_t minutes = 0;
+uint8_t seconds = 0;
+uint8_t update_display = 1;
 
 /* USER CODE END 0 */
 
@@ -92,9 +94,7 @@ int main(void)
 
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 
-    uint8_t minutes = 0;
-    uint8_t seconds = 0;
-    uint8_t update_display = 1;
+
 
   /* USER CODE END 2 */
 
@@ -109,21 +109,6 @@ int main(void)
             update_display = 0;
             // Update the screen
             LCD_display(&hlcd, minutes, seconds);
-        }
-
-        // Button polling
-        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4)) {
-            minutes = 0;
-            update_display = 1;
-        }
-        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5)) {
-            seconds = 0;
-            update_display = 1;
-        }
-        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)) {
-            minutes = 0;
-            seconds = 0;
-            update_display = 1;
         }
 
         uint32_t now = HAL_GetTick();
@@ -206,6 +191,31 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+/**
+ * Callback for HAL_GPIO_EXTI_IRQHandler() in EXTI4_15_IRQHandler().
+ *
+ * Handles the interrupts which occur on button press.
+ */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    if (GPIO_Pin == GPIO_PIN_4) {
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        minutes = 0;
+        update_display = 1;
+    }
+    else if (GPIO_Pin == GPIO_PIN_5) {
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        seconds = 0;
+        update_display = 1;
+    }
+    else if (GPIO_Pin == GPIO_PIN_6) {
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        minutes = 0;
+        seconds = 0;
+        update_display = 1;
+    }
+}
+
 
 /* USER CODE END 4 */
 
