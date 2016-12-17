@@ -64,9 +64,9 @@ void Error_Handler(void);
 
 uint32_t previous = 0;
 uint16_t interval = 1000;
-uint8_t minutes = 0;
-uint8_t seconds = 0;
-uint8_t update_display = 1;
+volatile uint8_t minutes = 0;
+volatile uint8_t seconds = 0;
+volatile uint8_t update_display = 1;
 
 /* USER CODE END 0 */
 
