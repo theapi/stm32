@@ -111,21 +111,6 @@ int main(void)
             LCD_display(&hlcd, minutes, seconds);
         }
 
-        uint32_t now = HAL_GetTick();
-        if (now - previous >= interval) {
-            previous = now;
-            seconds++;
-            if (seconds > 59) {
-                seconds = 0;
-                minutes++;
-                if (minutes > 99) {
-                    minutes = 0;
-                    seconds = 0;
-                }
-            }
-            update_display = 1;
-        }
-
     }
   /* USER CODE END 3 */
 
@@ -225,8 +210,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
  */
 void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
 {
-  /* Toggle LED */
-  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    /* Toggle LED */
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+
+    seconds++;
+    if (seconds > 59) {
+        seconds = 0;
+        minutes++;
+        if (minutes > 99) {
+            minutes = 0;
+            seconds = 0;
+        }
+    }
+    update_display = 1;
 }
 
 /* USER CODE END 4 */
