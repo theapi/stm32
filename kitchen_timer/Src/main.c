@@ -53,7 +53,6 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void Error_Handler(void);
-static void RTC_Config(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -91,22 +90,11 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_LCD_Init();
-  //MX_RTC_Init();
-
-  //HAL_RTC_Init(&hrtc);
-
-  RTC_Config();
+  MX_RTC_Init();
 
   /* USER CODE BEGIN 2 */
 
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-
-  /*##-2- Configure the RTC Wake up peripheral #################################*/
-  /* Setting the Wake up time to 1 s
-       If RTC_WAKEUPCLOCK_CK_SPRE_16BITS is selected, the frequency is 1Hz,
-       this allows to get a wakeup time equal to 1 s if the counter is 0x0 */
-  //HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0x0, RTC_WAKEUPCLOCK_CK_SPRE_16BITS);
-
 
   /* USER CODE END 2 */
 
@@ -190,6 +178,10 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 
+    /**Enables the Clock Security System 
+    */
+  HAL_RCCEx_EnableLSECSS();
+
     /**Configure the Systick interrupt time 
     */
   HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
@@ -229,49 +221,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 /**
- * Callback for HAL_RTCEx_SetWakeUpTimer_IT()
+ * Callback for RTC_IRQHandler()
  */
 void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
 {
   /* Toggle LED */
   HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-}
-
-/**
-  * @brief  Configure the RTC peripheral by selecting the clock source.
-  * @param  None
-  * @retval None
-  */
-static void RTC_Config(void)
-{
-  /*##-1- Configure the RTC peripheral #######################################*/
-  /* Configure RTC prescaler and RTC data registers */
-  /* RTC configured as follow:
-      - Hour Format    = Format 24
-      - Asynch Prediv  = Value according to source clock
-      - Synch Prediv   = Value according to source clock
-      - OutPut         = Output Disable
-      - OutPutPolarity = High Polarity
-      - OutPutType     = Open Drain */
-  RtcHandle.Instance = RTC;
-  RtcHandle.Init.HourFormat = RTC_HOURFORMAT_24;
-  RtcHandle.Init.AsynchPrediv = 0x7f; /* 0x7F */
-  RtcHandle.Init.SynchPrediv = 0x130; /* (39KHz / 128) - 1 = 0x130 */
-  RtcHandle.Init.OutPut = RTC_OUTPUT_DISABLE;
-  RtcHandle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
-  RtcHandle.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-
-  if(HAL_RTC_Init(&RtcHandle) != HAL_OK)
-  {
-    /* Initialization Error */
-    Error_Handler();
-  }
-
-  /*##-2- Configure the RTC Wake up peripheral #################################*/
-  /* Setting the Wake up time to 1 s
-       If RTC_WAKEUPCLOCK_CK_SPRE_16BITS is selected, the frequency is 1Hz,
-       this allows to get a wakeup time equal to 1 s if the ciunter is 0x0 */
-  HAL_RTCEx_SetWakeUpTimer_IT(&RtcHandle, 0x0, RTC_WAKEUPCLOCK_CK_SPRE_16BITS);
 }
 
 /* USER CODE END 4 */
