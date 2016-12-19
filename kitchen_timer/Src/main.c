@@ -61,13 +61,11 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
-RTC_HandleTypeDef RtcHandle;
 
-
-uint32_t previous = 0;
-uint16_t interval = 1000;
+volatile uint8_t state = 0;
 volatile uint8_t minutes = 0;
 volatile uint8_t seconds = 0;
+volatile uint8_t ampm = 1;
 volatile uint8_t update_display = 1;
 
 /* USER CODE END 0 */
@@ -94,6 +92,10 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
+  /* Stop the RTC clock initially */
+  HAL_RTC_MspDeInit(&hrtc);
+  LCD_display(&hlcd, minutes, seconds, ampm);
+
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 
   /* USER CODE END 2 */
@@ -105,10 +107,10 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-        if (update_display) {
+        if (update_display == 1) {
             update_display = 0;
             // Update the screen
-            LCD_display(&hlcd, minutes, seconds);
+            LCD_display(&hlcd, minutes, seconds, ampm);
         }
 
     }
@@ -188,19 +190,26 @@ void SystemClock_Config(void)
  */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == GPIO_PIN_4) {
-        //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
         minutes = 0;
         update_display = 1;
     }
     else if (GPIO_Pin == GPIO_PIN_5) {
-        //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
         seconds = 0;
         update_display = 1;
     }
     else if (GPIO_Pin == GPIO_PIN_6) {
-        //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-        minutes = 0;
-        seconds = 0;
+        if (state == 0x0) {
+            // Stopped so start.
+            state = 0x1;
+            HAL_RTC_MspInit(&hrtc);
+            ampm = 0;
+        }
+        else {
+            // Running so stop
+            state = 0x0;
+            HAL_RTC_MspDeInit(&hrtc);
+            ampm = 1;
+        }
         update_display = 1;
     }
 }

@@ -135,7 +135,7 @@ const uint32_t lcd_digits[4][11][4] = {
     },
 };
 
-void LCD_display(LCD_HandleTypeDef *hlcd, uint8_t minutes, uint8_t seconds) {
+void LCD_display(LCD_HandleTypeDef *hlcd, uint8_t minutes, uint8_t seconds, uint8_t ampm) {
 
     uint8_t minutes_tens = 0;
     uint8_t minutes_singles = minutes % 10;
@@ -165,6 +165,9 @@ void LCD_display(LCD_HandleTypeDef *hlcd, uint8_t minutes, uint8_t seconds) {
             | lcd_digits[1][minutes_singles][3] | lcd_digits[2][seconds_tens][3]
             | lcd_digits[3][seconds_singles][3];
 
+    if (ampm == 1) {
+        LCD->RAM[LCD_RAM_REGISTER6] |= LCD_SEG_4;
+    }
 
     HAL_LCD_UpdateDisplayRequest(hlcd);
 }

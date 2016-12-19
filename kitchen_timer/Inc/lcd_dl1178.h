@@ -44,7 +44,7 @@
 
 
 
-void LCD_display(LCD_HandleTypeDef *hlcd, uint8_t minutes, uint8_t seconds);
+void LCD_display(LCD_HandleTypeDef *hlcd, uint8_t minutes, uint8_t seconds, uint8_t ampm);
 
 #ifdef __cplusplus
 }
