@@ -92,11 +92,14 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
+  /* Enable Ultra low power mode */
+    HAL_PWREx_EnableUltraLowPower();
+
   /* Stop the RTC clock initially */
   HAL_RTC_MspDeInit(&hrtc);
   LCD_display(&hlcd, minutes, seconds, ampm);
 
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 
   /* USER CODE END 2 */
 
@@ -112,6 +115,9 @@ int main(void)
             // Update the screen
             LCD_display(&hlcd, minutes, seconds, ampm);
         }
+
+        /* Enter Stop Mode */
+        HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
     }
   /* USER CODE END 3 */
@@ -220,7 +226,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
 {
     /* Toggle LED */
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 
     seconds++;
     if (seconds > 59) {
@@ -244,7 +250,7 @@ void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
     /* User can add his own implementation to report the HAL error return state */
     while (1) {
     }
