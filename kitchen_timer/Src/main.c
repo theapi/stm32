@@ -4,7 +4,7 @@
   * Description        : Main program body
   ******************************************************************************
   *
-  * COPYRIGHT(c) 2016 STMicroelectronics
+  * COPYRIGHT(c) 2017 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -35,6 +35,7 @@
 #include "stm32l0xx_hal.h"
 #include "lcd.h"
 #include "rtc.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
@@ -89,6 +90,7 @@ int main(void)
   MX_GPIO_Init();
   MX_LCD_Init();
   MX_RTC_Init();
+  MX_TIM2_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -100,6 +102,9 @@ int main(void)
   LCD_display(&hlcd, minutes, seconds, ampm);
 
   //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+
+  /* PB11 buzzing */
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 
   /* USER CODE END 2 */
 
@@ -117,7 +122,7 @@ int main(void)
         }
 
         /* Enter Stop Mode */
-        HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+        //HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
     }
   /* USER CODE END 3 */
