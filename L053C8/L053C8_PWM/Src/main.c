@@ -4,7 +4,7 @@
   * Description        : Main program body
   ******************************************************************************
   *
-  * COPYRIGHT(c) 2016 STMicroelectronics
+  * COPYRIGHT(c) 2017 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -80,7 +80,7 @@ int main(void)
   MX_TIM2_Init();
 
   /* USER CODE BEGIN 2 */
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
     //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
     //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
     //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
@@ -95,9 +95,11 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
       //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-      HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+
+      /* PB11 */
+      HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
         HAL_Delay(62);
-        HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+        HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_4);
         HAL_Delay(1000);
 
   }
