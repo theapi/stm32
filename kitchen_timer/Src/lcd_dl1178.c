@@ -69,7 +69,10 @@ const uint32_t lcd_digits[4][11][4] = {
              LCD_SEG_5              /* COM4 */
         },
         /* 1 */
-        {LCD_SEG_5, 0, LCD_SEG_5, 0},
+        {0,
+         0,
+         0,
+         0},
         /* 2 */
         {LCD_SEG_5 | LCD_SEG_6, LCD_SEG_5, LCD_SEG_6, LCD_SEG_5},
         /* 3 */
@@ -92,7 +95,10 @@ const uint32_t lcd_digits[4][11][4] = {
         /* 0 */
         {LCD_SEG_4 | LCD_SEG_3, LCD_SEG_4, LCD_SEG_4 | LCD_SEG_3, LCD_SEG_3},
         /* 1 */
-        {LCD_SEG_3, 0, LCD_SEG_3, 0},
+        {0,
+         0,
+         0,
+         0},
         /* 2 */
         {LCD_SEG_3 | LCD_SEG_4,LCD_SEG_3, LCD_SEG_4, LCD_SEG_3},
         /* 3 */
@@ -115,7 +121,10 @@ const uint32_t lcd_digits[4][11][4] = {
         /* 0 */
         {LCD_SEG_2 | LCD_SEG_1, LCD_SEG_2, LCD_SEG_2 | LCD_SEG_1, LCD_SEG_1},
         /* 1 */
-        {LCD_SEG_1, 0, LCD_SEG_1, 0},
+        {0,
+         0,
+         0,
+         0},
         /* 2 */
         {LCD_SEG_1 | LCD_SEG_2, LCD_SEG_1, LCD_SEG_2, LCD_SEG_1},
         /* 3 */
@@ -157,16 +166,16 @@ void LCD_display(LCD_HandleTypeDef *hlcd, uint8_t minutes, uint8_t seconds, uint
             | lcd_digits[1][minutes_singles][1] | lcd_digits[2][seconds_tens][1]
             | lcd_digits[3][seconds_singles][1];
 
-    LCD->RAM[LCD_RAM_REGISTER4] = lcd_digits[0][minutes_tens][2]
+    LCD->RAM[LCD_RAM_REGISTER6] = lcd_digits[0][minutes_tens][2]
             | lcd_digits[1][minutes_singles][2] | lcd_digits[2][seconds_tens][2]
             | lcd_digits[3][seconds_singles][2];
 
-    LCD->RAM[LCD_RAM_REGISTER6] = lcd_digits[0][minutes_tens][3]
+    LCD->RAM[LCD_RAM_REGISTER4] = lcd_digits[0][minutes_tens][3]
             | lcd_digits[1][minutes_singles][3] | lcd_digits[2][seconds_tens][3]
             | lcd_digits[3][seconds_singles][3];
 
     if (ampm == 1) {
-        LCD->RAM[LCD_RAM_REGISTER6] |= LCD_SEG_4;
+        LCD->RAM[LCD_RAM_REGISTER4] |= LCD_SEG_4;
     }
 
     HAL_LCD_UpdateDisplayRequest(hlcd);

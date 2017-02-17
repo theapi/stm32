@@ -80,10 +80,10 @@ int main(void)
   MX_TIM2_Init();
 
   /* USER CODE BEGIN 2 */
-  //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-    //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
-    //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
-    //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 
   /* USER CODE END 2 */
 
@@ -94,13 +94,19 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-      //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 
       /* PB11 */
       HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
         HAL_Delay(62);
         HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_4);
-        HAL_Delay(1000);
+        //HAL_Delay(1000);
+
+        /* PBA15 */
+      HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+        HAL_Delay(62);
+        HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+        HAL_Delay(100);
 
   }
   /* USER CODE END 3 */
